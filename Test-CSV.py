@@ -23,7 +23,7 @@ def precinctSep(precRow): #This function seperates the precinct name from the id
 
     return precRow
 
-with open("Testing.csv", newline='') as thing:
+with open("Data/Testing.csv", newline='') as thing:
     
     baseData = csv.reader(thing)
     
@@ -33,7 +33,7 @@ with open("Testing.csv", newline='') as thing:
             rows.append('')
 
         final.append(rows)
-    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), LeeScottLingamfelter int,SaraElizabethTownsend int, OtherVotes int, TotalVotesCast int);")    
+    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int);")    
     for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
 
         if rowss <= 1: #This condition removes useless information
