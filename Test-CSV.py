@@ -18,6 +18,6 @@ with open("Testing.csv", newline='') as thing:
     for rowNew in range(len(final)):
         for column in range(len(final[rowNew])):
             sortDict[column].append(final[rowNew][column])
-    print (combined)
+    
             
             
