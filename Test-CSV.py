@@ -1,7 +1,8 @@
 import csv
-
+import os
 
 final = []
+last = []
 
 colOne = []
 colTwo = []
@@ -22,40 +23,45 @@ def precinctSep(precRow): #This function seperates the precinct name from the id
         precRow[temp] = precRow[temp].strip().replace(" ","_")
 
     return precRow
-
-with open("Data/Testing.csv", newline='') as thing:
-    
-    baseData = csv.reader(thing)
-    
-    for rows in baseData: #This loop makes the main file a more standard list called 'final'
-
-        while (len(rows) != 7):
-            rows.append('')
-
-        final.append(rows)
-    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int);")    
-    for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
-
-        if rowss <= 1: #This condition removes useless information
-            pass
-        
-        elif len(precinctSep(final[rowss][2])) == 2:
-            print ("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "'," , int(str(final[rowss][3]).replace(',','')) ,"," , int(str(final[rowss][4]).replace(',','')) ,"," , int(str(final[rowss][5]).replace(',','')) ,"," , int(str(final[rowss][6]).replace(',','')) , ");" )
-
-        else:
-            print ("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," , int(str(final[rowss][3]).replace(',','')) ,"," , int(str(final[rowss][4]).replace(',','')) ,"," , int(str(final[rowss][5]).replace(',','')) ,"," , int(str(final[rowss][6]).replace(',','')) , ");" )
-
-
-
-    
-
-    
-
-    for rowNew in range(len(final)):
-
-        for column in range(len(final[rowNew])):
-
-            sortDict[column].append(final[rowNew][column])
-    
+indir = '/home/dsmall/VA_votes/CSV_converter/Data'
+for root, dirs, filenames in os.walk(indir):
+    for f in filenames:
+        with open(os.path.join(root, f), newline='') as thing:
             
+            baseData = csv.reader(thing)
             
+            for rows in baseData: #This loop makes the main file a more standard list called 'final'
+
+                while (len(rows) != 7):
+                    rows.append('')
+
+                final.append(rows)
+            for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
+
+                if rowss%31 <= 1: #This condition removes useless information
+                    pass
+                
+                elif len(precinctSep(final[rowss][2])) == 2:
+                    last.append("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "', " + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') + ", " + str(final[rowss][6]).replace(',','') + " );" )
+
+                else:
+                    last.append("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') +", " + str(final[rowss][6]).replace(',','') + " );" )
+
+            
+            print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int);")    
+            for x in last:
+                    print (x)
+
+
+            
+
+            
+
+            for rowNew in range(len(final)):
+
+                for column in range(len(final[rowNew])):
+
+                    sortDict[column].append(final[rowNew][column])
+            
+                    
+                    
