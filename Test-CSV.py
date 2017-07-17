@@ -19,7 +19,7 @@ def precinctSep(precRow): #This function seperates the precinct name from the id
     precRow = precRow.split("-",1)
 
     for temp in range(len(precRow)):
-        precRow[temp] = precRow[temp].strip()
+        precRow[temp] = precRow[temp].strip().replace(" ","_")
 
     return precRow
 
@@ -33,17 +33,17 @@ with open("Testing.csv", newline='') as thing:
             rows.append('')
 
         final.append(rows)
-        
-    for rowss in range(len(final)): #this loop makes the INSERT statements for the Precinct Table
+    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), LeeScottLingamfelter int,SaraElizabethTownsend int, OtherVotes int, TotalVotesCast int);")    
+    for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
 
-        if rowss <= 1 or rowss == (len(final) - 1): #These conditions remove useless information
+        if rowss <= 1: #This condition removes useless information
             pass
         
         elif len(precinctSep(final[rowss][2])) == 2:
-            print ("INSERT INTO Precincts VALUES (" , (precinctSep(final[rowss][2]))[1] , "," , (precinctSep(final[rowss][2]))[0] , "," , final[rowss][0] , ")" )
+            print ("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "'," , int(str(final[rowss][3]).replace(',','')) ,"," , int(str(final[rowss][4]).replace(',','')) ,"," , int(str(final[rowss][5]).replace(',','')) ,"," , int(str(final[rowss][6]).replace(',','')) , ");" )
 
         else:
-            print ("INSERT INTO Precincts VALUES (" , (precinctSep(final[rowss][2])) , "," , (precinctSep(final[rowss][2])) , "," , final[rowss][0] , ")" )
+            print ("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," , int(str(final[rowss][3]).replace(',','')) ,"," , int(str(final[rowss][4]).replace(',','')) ,"," , int(str(final[rowss][5]).replace(',','')) ,"," , int(str(final[rowss][6]).replace(',','')) , ");" )
 
 
 
