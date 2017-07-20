@@ -13,7 +13,7 @@ colFive = []
 colSix = []
 colSeven = []
 
-pattern = re.compile("[0-9]") #makes a pattern that checks for a digit
+pattern = re.compile("\d") #makes a pattern that checks for a digit
 
 combined = [colOne,colTwo,colThree,colFour,colFive,colSix,colSeven]
 sortDict = {0:colOne,1:colTwo,2:colThree,3:colFour,4:colFive,5:colSix,6:colSeven}
