@@ -42,26 +42,15 @@ for root, dirs, filenames in os.walk(indir):
                     pass
                 
                 elif len(precinctSep(final[rowss][2])) == 2:
-                    last.append("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "', " + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') + ", " + str(final[rowss][6]).replace(',','') + " );" )
+                    last.append("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "', " + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') + ", " + str(final[rowss][6]).replace(',','') + ',' + f +" );" )
 
                 else:
-                    last.append("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') +", " + str(final[rowss][6]).replace(',','') + " );" )
+                    last.append("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') +", " + str(final[rowss][6]).replace(',','') + ',' + f + " );" )
 
             
-            print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int);")    
-            for x in last:
-                    print (x)
+    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int, FileName varchar(255));")
+    for x in last:
+        print (x)
 
 
-            
-
-            
-
-            for rowNew in range(len(final)):
-
-                for column in range(len(final[rowNew])):
-
-                    sortDict[column].append(final[rowNew][column])
-            
-                    
                     
