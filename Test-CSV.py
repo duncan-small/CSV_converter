@@ -1,5 +1,6 @@
 import csv
 import os
+import re
 
 final = []
 last = []
@@ -11,6 +12,8 @@ colFour = []
 colFive = []
 colSix = []
 colSeven = []
+
+pattern = re.compile("[0-9]") #makes a pattern that checks for a digit
 
 combined = [colOne,colTwo,colThree,colFour,colFive,colSix,colSeven]
 sortDict = {0:colOne,1:colTwo,2:colThree,3:colFour,4:colFive,5:colSix,6:colSeven}
@@ -38,7 +41,7 @@ for root, dirs, filenames in os.walk(indir):
                 final.append(rows)
             for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
 
-                if rowss%31 <= 1: #This condition removes useless information
+                if not (pattern.match(final[rowss][4])): #This condition removes useless information
                     pass
                 
                 elif len(precinctSep(final[rowss][2])) == 2:
