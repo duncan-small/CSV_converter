@@ -24,7 +24,7 @@ for root, dirs, filenames in os.walk(indir):
             
             baseData = csv.reader(thing)
             for rows in baseData: #This loop makes the main file a more standard list called 'final'
-                if ((rows[0] == 'Fauquier County' or rows[0] == 'Prince William County') and (rows[2].startswith(districtSpecific))):
+                if rows[0] == 'TOTALS' or ((rows[0] == 'Fauquier County' or rows[0] == 'Prince William County') and (rows[2].startswith(districtSpecific))):
                     print(rows[2])
                     rows.append(str(f).replace('Virginia_Elections_Database__','').replace('_including_precincts.csv',''))
                     final.append(rows)
