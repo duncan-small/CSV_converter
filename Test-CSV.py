@@ -32,28 +32,25 @@ for root, dirs, filenames in os.walk(indir):
         with open(os.path.join(root, f), newline='') as thing:
             
             baseData = csv.reader(thing)
-            
             for rows in baseData: #This loop makes the main file a more standard list called 'final'
 
                 while (len(rows) != 7):
                     rows.append('')
-
+                rows.append(str(f).replace('Virginia_Elections_Database__','').replace('_including_precincts.csv',''))
                 final.append(rows)
-            for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
-
-                if not (pattern.match(final[rowss][4])): #This condition removes useless information
-                    pass
                 
-                elif len(precinctSep(final[rowss][2])) == 2:
-                    last.append("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "', " + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') + ", " + str(final[rowss][6]).replace(',','') + ',' + f +" );" )
+    for rowss in range(len(final)): #This loop makes the INSERT statements for the Precinct Table
 
-                else:
-                    last.append("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') +", " + str(final[rowss][6]).replace(',','') + ',' + f + " );" )
-
-            
-    print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int, FileName varchar(255));")
-    for x in last:
-        print (x)
+        if len(precinctSep(final[rowss][2])) == 2:
+            last.append("INSERT INTO Precincts VALUES ('" + str((precinctSep(final[rowss][2]))[1]) + "' , '" + (precinctSep(final[rowss][2]))[0] + "', '" + final[rowss][0].replace(" ","_") + "', " + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') + ", " + str(final[rowss][6]).replace(',','') + ", '" + final[rowss][7] +"' );" )
+        elif not (pattern.match(final[rowss][4])): #This condition removes useless information
+            pass
+        
+        else:
+            last.append("INSERT INTO Precincts VALUES ( 'NA' , 'NA' , '" + final[rowss][0].replace(" ","_") + "'," + str(final[rowss][3]).replace(',','') +", " + str(final[rowss][4]).replace(',','') +", " + str(final[rowss][5]).replace(',','') +", " + str(final[rowss][6]).replace(',','') + ", '" + final[rowss][7] + "' );" )
+print( "CREATE TABLE Precincts (PrecinctNames varchar(255), PrecinctID varchar(255), ParentCounty varchar(255), Republican int, Democrat int, OtherVotes int, TotalVotesCast int, FileName varchar(255));")
+for x in last:
+    print (x)
 
 
                     
