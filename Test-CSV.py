@@ -20,10 +20,10 @@ sortDict = {0:colOne,1:colTwo,2:colThree,3:colFour,4:colFive,5:colSix,6:colSeven
 
 def precinctSep(precRow): #This function seperates the precinct name from the id, the original format is "id - name", I make it a list : [name,id]
 
-    precRow = precRow.split("-",1)
+    precRow = precRow.split("-",1) #breaks the string where there is a dash and puts it into a list
 
     for temp in range(len(precRow)):
-        precRow[temp] = precRow[temp].strip().replace(" ","_")
+        precRow[temp] = precRow[temp].strip().replace(" ","_") #this takes out spaces from both sides and turns the remaining into underscores to fit SQL Syntax
 
     return precRow
 indir = 'Data/'
