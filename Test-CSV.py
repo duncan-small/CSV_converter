@@ -23,7 +23,7 @@ def precinctSep(precRow): #This function seperates the precinct name from the id
         precRow[temp] = precRow[temp].strip().replace(" ","_")
 
     return precRow
-indir = '/home/dsmall/VA_votes/CSV_converter/Data'
+indir = 'Data/'
 for root, dirs, filenames in os.walk(indir):
     for f in filenames:
         with open(os.path.join(root, f), newline='') as thing:
